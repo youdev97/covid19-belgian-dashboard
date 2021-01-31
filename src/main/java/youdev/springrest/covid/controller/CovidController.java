@@ -11,17 +11,20 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.core.JsonParseException;
 
+import lombok.extern.slf4j.Slf4j;
 import youdev.springrest.covid.service.DataServiceImpl;
 
+@Slf4j
 @RestController
-@RequestMapping("/")
+@RequestMapping("/api")
 public class CovidController {
 
 	@Autowired
 	private DataServiceImpl service;
 
-	@RequestMapping(value = "/", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = {"", "/hospitals"}, method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public String findAll(Model model) throws JsonParseException, IOException {
+		log.info("/api/hospitals call get hospitals data");
 		String json = service.getLastData();
 		return json;
 	}
