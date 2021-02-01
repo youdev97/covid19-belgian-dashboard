@@ -31,9 +31,9 @@ public class DataServiceImpl {
 	    String jsonString =  restTemplate.exchange(url, HttpMethod.GET, entity, String.class).getBody();
 	    ObjectMapper mapper = new ObjectMapper();
 	    JsonNode root = mapper.readTree(jsonString);
-	    ArrayList<ObjectNode> brusselsDatas = new ArrayList();
-	    ArrayList<ObjectNode> walloniaDatas = new ArrayList();
-	    ArrayList<ObjectNode> flandersDatas = new ArrayList();
+	    ArrayList<ObjectNode> brusselsDatas = new ArrayList<>();
+	    ArrayList<ObjectNode> walloniaDatas = new ArrayList<>();
+	    ArrayList<ObjectNode> flandersDatas = new ArrayList<>();
 	    for (JsonNode node : root.get("records")) {
             	ObjectNode record = mapper.createObjectNode();
             	record.put("recordid", node.get("recordid").asText());
