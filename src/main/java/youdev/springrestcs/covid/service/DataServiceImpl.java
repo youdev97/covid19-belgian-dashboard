@@ -1,4 +1,4 @@
-package youdev.springrest.covid.service;
+package youdev.springrestcs.covid.service;
 
 import java.io.IOException;
 import java.util.ArrayList;

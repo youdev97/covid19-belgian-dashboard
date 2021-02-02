@@ -1,4 +1,4 @@
-package youdev.springrest.covid.controller;
+package youdev.springrestcs.covid.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

@@ -7,13 +7,13 @@
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>2.3.8.RELEASE</version>
-		<relativePath /> <!-- lookup parent from repository -->
+		<relativePath />
 	</parent>
-	<groupId>youdev.springrest.covid</groupId>
-	<artifactId>spring-boot-rest-covid</artifactId>
+	<groupId>youdev.springrestcs.covid</groupId>
+	<artifactId>spring-boot-restcs-covid</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>covid</name>
-	<description>Rest API</description>
+	<description>Consume Rest API</description>
 	<properties>
 		<java.version>11</java.version>
 	</properties>
