@@ -1,4 +1,4 @@
-package youdev.springrest.covid;
+package youdev.springrestcs.covid;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
