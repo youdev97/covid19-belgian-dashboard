@@ -1,24 +1,7 @@
 {
 	"name": "spring-rest-consume-and-reactjs",
 	"version": "0.1.0",
-	"description": "Demo of ReactJS + Spring Data REST",
-	"repository": {
-		"type": "git",
-		"url": "git@github.com:spring-guides/tut-react-and-spring-data-rest.git"
-	},
-	"keywords": [
-		"rest",
-		"hateoas",
-		"spring",
-		"data",
-		"react"
-	],
-	"author": "Greg L. Turnquist",
-	"license": "Apache-2.0",
-	"bugs": {
-		"url": "https://github.com/spring-guides/tut-react-and-spring-data-rest/issues"
-	},
-	"homepage": "https://github.com/spring-guides/tut-react-and-spring-data-rest",
+	"description": "Demo of ReactJS + Spring JSON End Point",
 	"dependencies": {
 		"bootstrap": "^4.5.3",
 		"react": "^16.5.2",
