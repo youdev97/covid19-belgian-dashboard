@@ -1,0 +1,53 @@
+#logo {
+  height: 60px;
+}
+
+#title {
+  text-align: center;
+}
+
+/****** Line chart ******/
+.overlay {
+  fill: none;
+  pointer-events: all;
+}
+
+.focus circle {
+  fill: #F1F3F3;
+  stroke: #777;
+  stroke-width: 3px;
+}
+
+.hover-line {
+  stroke: #777;
+  stroke-width: 2px;
+  stroke-dasharray: 3, 3;
+}
+
+.line {
+  fill: none;
+  stroke-width: 3px;
+  stroke: grey;
+}
+
+/************/
+
+/****** Map ******/
+.region {
+  fill: rgb(240, 240, 240);
+  stroke: #000000;
+  stroke-width: 0.5;
+}
+
+.region:hover {
+  cursor: pointer;
+  fill: gray;
+}
+
+#map {
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+/************/
