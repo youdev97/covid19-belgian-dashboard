@@ -39,9 +39,10 @@ public class DataServiceImpl {
             	record.put("recordid", node.get("recordid").asText());
             	record.put("province", node.at("/fields/province").asText());
             	record.put("region", node.at("/fields/region").asText());
-            	record.put("new_in", node.at("/fields/new_in").asText());
-            	record.put("new_out", node.at("/fields/new_out").asText());
-            	record.put("total_in", node.at("/fields/total_in").asText());
+            	record.put("new_in", node.at("/fields/new_in").asInt());
+            	record.put("new_out", node.at("/fields/new_out").asInt());
+            	record.put("total_in", node.at("/fields/total_in").asInt());
+            	record.put("total_in_resp", node.at("/fields/total_in_resp").asInt());
             	record.put("date", node.at("/fields/date").asText());
             	switch(node.at("/fields/region").asText()) {
             	case "Brussels":

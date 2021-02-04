@@ -24,41 +24,22 @@ class App extends Component {
   componentDidMount() {
     // load data
     // time parsers/formatters
-    const url = 'https://data.opendatasoft.com/api/records/1.0/search/?dataset=covid-19-pandemic-belgium-hosp-province%40public&rows=1200&sort=date&facet=date&facet=province&facet=region'
-    // const url = 'data/data.json' in case of broken url test with this
-    const formattedData = {}
+    const url = 'http://localhost:8080/api/hospitals'
     const parent = this
     d3.json(url).then(function (data) {
-      // wrapping data into an array
-      data = Object.values(data)
-
-      // sort the array by Region becoming the key
-      const dataByRegion = data[2].reduce(function (r, a) {
-        r[a.fields.region] = r[a.fields.region] || []
-        r[a.fields.region].push(a)
-        return r
-      }, Object.create(null))
-
-      // Filter, format and sort fields by date ascending
-      Object.keys(dataByRegion).forEach(region => {
-        formattedData[region] = dataByRegion[region]
-          .filter(d => {
-            const validData = (d.fields.new_in && d.fields.date && d.fields.total_in)
-            return validData
-          }).map(d => {
-            d.fields.new_in = Number(d.fields.new_in)
-            d.fields.total_in = Number(d.fields.total_in)
-            d.fields.date = parent.parseTime(d.fields.date)
-            return d.fields
-          }).sort(function (a, b) {
-            return a.date - b.date
-          })
+      // transform date string to DateF
+      Object.values(data).forEach(region => {
+        region.map(d => {
+          d.date = new Date(d.date)
+          return d
+        })
       })
+      console.log(data)
       d3.json('./data/belgium.json').then(function (values) {
         parent.geoData = values
         //console.log(formattedData)
         parent.setState({
-          data: formattedData
+          data: data
         })
       }).catch(function (error) {
         console.error('error getting map json', error)
@@ -87,11 +68,10 @@ class App extends Component {
         <nav className='navbar navbar-light bg-light'>
           <div className='container'>
             <a className='navbar-brand' href="/">
-             	<img id='logo' src={logo} height='120' alt="logo that represents a virus" />
+              <img id='logo' src={logo} height='120' alt="logo that represents a virus" />
             </a>
           </div>
         </nav>
-
         <div className='container'>
           <div className='col-sm-12 col-md-12 col-xl-12'>
             <div className='buttons-container'>
@@ -101,17 +81,6 @@ class App extends Component {
             </div>
           </div>
           <div className='row'>
-            <div className='col-sm-12 col-md-12 col-xl-6'>
-              <div id='chart-area'>
-                {lineChart}
-              </div>
-
-            </div>
-            <div className='col-sm-12 col-md-12 col-xl-6'>
-              <div id='chart-area2'>
-                {lineChart2}
-              </div>
-            </div>
             <div className='col-sm-12 col-md-12 col-xl-12'>
               <div id='map'>
                 {mapChart}

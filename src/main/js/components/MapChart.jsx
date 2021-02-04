@@ -68,15 +68,11 @@ class MapChart extends Component {
     const vis = this.vis
     vis.data = JSON.parse(JSON.stringify(this.data)) // copy object with no reference to avoid perturb the linechart who need data ordered by date asc
     vis.geoData = this.geoData
-    console.log(vis.data)
-    // sort by date desc because we want recent data
+    // transform date string to Date
     Object.values(vis.data).forEach(region => {
       region.map(d => {
         d.date = new Date(d.date)
         return d
-      })
-      region.sort(function (a, b) {
-        return b.date - a.date
       })
     })
     console.log(vis.data)
@@ -160,17 +156,16 @@ class MapChart extends Component {
   // sum the latest data of region's subunits('province')
   getLastRegionData (region) {
     const vis = this.vis
-    const lastReport = vis.data[region][0]
-    let { total_in, new_in, new_out, total_in_resp, date } = lastReport
-    let i = 1
-    while (this.formatTime(lastReport.date) === this.formatTime(vis.data[region][i].date)) {
+    let i = 0
+    const lastReport = vis.data[region][i]
+    let { date, new_in, new_out, total_in, total_in_resp } = lastReport
+    while ( ++i < vis.data[region].length && (this.formatTime(lastReport.date) === this.formatTime(vis.data[region][i].date))) {
       total_in += vis.data[region][i].total_in
       total_in_resp += vis.data[region][i].total_in_resp
       new_in += vis.data[region][i].new_in
       new_out += vis.data[region][i].new_out
-      i++
     }
-    return { total_in, total_in_resp, new_in, new_out, date }
+    return { date, new_in, new_out, total_in, total_in_resp }
   }
 
   render () {
