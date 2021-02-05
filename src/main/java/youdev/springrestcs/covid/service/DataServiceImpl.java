@@ -22,13 +22,15 @@ public class DataServiceImpl {
 
 	@Autowired
 	private RestTemplate restTemplate;
-
+	
+	// data sorted by date desc
+	private static final String LAST_DATA_URL = "https://data.opendatasoft.com/api/records/1.0/search/?dataset=covid-19-pandemic-belgium-hosp-province@public&rows=1200&sort=date&facet=date&facet=province&facet=region";
+	
 	public String getLastData() throws JsonParseException, IOException {
 		HttpHeaders headers = new HttpHeaders();
 	    headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
 	    HttpEntity <String> entity = new HttpEntity<String>(headers);
-	    String url = "https://data.opendatasoft.com/api/records/1.0/search/?dataset=covid-19-pandemic-belgium-hosp-province@public&rows=20&sort=date&facet=date&facet=province&facet=region";
-	    String jsonString =  restTemplate.exchange(url, HttpMethod.GET, entity, String.class).getBody();
+	    String jsonString =  restTemplate.exchange(LAST_DATA_URL, HttpMethod.GET, entity, String.class).getBody();
 	    ObjectMapper mapper = new ObjectMapper();
 	    JsonNode root = mapper.readTree(jsonString);
 	    ArrayList<ObjectNode> brusselsDatas = new ArrayList<>();

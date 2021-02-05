@@ -34,7 +34,7 @@ class App extends Component {
           return d
         })
       })
-      console.log(data)
+      //console.log(data)
       d3.json('./data/belgium.json').then(function (values) {
         parent.geoData = values
         //console.log(formattedData)
@@ -81,6 +81,17 @@ class App extends Component {
             </div>
           </div>
           <div className='row'>
+            <div className='col-sm-12 col-md-12 col-xl-6'>
+              <div id='chart-area'>
+                {lineChart}
+              </div>
+
+            </div>
+            <div className='col-sm-12 col-md-12 col-xl-6'>
+              <div id='chart-area2'>
+                {lineChart2}
+              </div>
+            </div>
             <div className='col-sm-12 col-md-12 col-xl-12'>
               <div id='map'>
                 {mapChart}

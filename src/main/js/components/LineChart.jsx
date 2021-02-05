@@ -12,7 +12,7 @@ class LineChart extends Component {
     }
   }
 
-  componentDidMount () {
+  componentDidMount() {
     this.vis = {
       parentElement: this.props.parentElement,
       variable: this.props.variable,
@@ -23,7 +23,7 @@ class LineChart extends Component {
     this.drawChart()
   }
 
-  drawChart () {
+  drawChart() {
     const vis = this.vis
     vis.MARGIN = { LEFT: 100, RIGHT: 100, TOP: 50, BOTTOM: 100 }
     vis.WIDTH = 600 - vis.MARGIN.LEFT - vis.MARGIN.RIGHT
@@ -88,11 +88,19 @@ class LineChart extends Component {
     this.wrangleData(this.state.city)
   }
 
-  wrangleData (city) {
+  wrangleData(city) {
     const vis = this.vis
     vis.data = JSON.parse(JSON.stringify(this.data));
     // filter by region
     vis.filteredData = vis.data[city]
+    // sort by date asc to make the tooltip work
+    vis.filteredData = vis.filteredData.map(d => {
+      d.date = new Date(d.date)
+      return d
+    }).sort(function (a, b) {
+      return a.date - b.date
+    })
+    // console.log(vis.filteredData)
     // if region have subunits sum the data for the same date
     vis.filteredData = d3.nest()
       .key(function (d) {
@@ -104,11 +112,12 @@ class LineChart extends Component {
         })
       })
       .entries(vis.filteredData)
+    //console.log(vis.filteredData)
     vis.g.select('text').text(city) // update title
     this.updateVis()
   }
 
-  updateVis () {
+  updateVis() {
     const vis = this.vis
     vis.t = d3.transition().duration(1000)
 
@@ -160,7 +169,7 @@ class LineChart extends Component {
       .on('mouseout', () => vis.focus.style('display', 'none'))
       .on('mousemove', mousemove)
 
-    function mousemove () {
+    function mousemove() {
       // console.log(vis.filteredData)
       const x0 = vis.x.invert(d3.mouse(this)[0])
       const i = vis.bisectDate(vis.filteredData, x0, 1)
@@ -194,7 +203,7 @@ class LineChart extends Component {
     this.wrangleData(this.state.city)
   }
 
-  render () {
+  render() {
     return <div />
   }
 }
