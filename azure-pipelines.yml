@@ -28,8 +28,9 @@ steps:
       publishJUnitResults: false
       jdkVersionOption: '1.11'
   - task: Docker@2
-  inputs:
-    containerRegistry: 'younescontainerregistry'
-    repository: 'spring-boot-restcs-covid'
-    command: 'push'
-    tags: 'latest'
+      displayName: Push Docker image
+      inputs:
+        containerRegistry: 'younescontainerregistry'
+        repository: 'spring-boot-restcs-covid'
+        command: 'push'
+        tags: 'latest'
