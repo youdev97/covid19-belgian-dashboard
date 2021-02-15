@@ -33,6 +33,6 @@ steps:
     displayName: Push Docker image
     inputs:
       containerRegistry: 'younescontainerregistry'
-      repository: 'covidbelgium'
+      repository: 'spring-boot-restcs-covid'
       command: 'push'
       tags: 'latest'
