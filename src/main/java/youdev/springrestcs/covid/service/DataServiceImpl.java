@@ -3,12 +3,15 @@ package youdev.springrestcs.covid.service;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -26,6 +29,8 @@ public class DataServiceImpl {
 	// data sorted by date desc
 	private static final String LAST_DATA_URL = "https://data.opendatasoft.com/api/records/1.0/search/?dataset=covid-19-pandemic-belgium-hosp-province@public&rows=1200&sort=date&facet=date&facet=province&facet=region";
 	
+	@Cacheable("data")
+	@Scheduled(fixedRate = 3600 * 6)
 	public String getLastData() throws JsonParseException, IOException {
 		HttpHeaders headers = new HttpHeaders();
 	    headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
