@@ -24,7 +24,9 @@ class App extends Component {
   componentDidMount() {
     // load data
     // time parsers/formatters
-    const url = 'http://localhost:8080/api/hospitals'
+
+    const url = window.location.hostname == 'localhost'?'http://localhost:8080/api/hospitals' : window.location.origin+'/api/hospitals'
+
     const parent = this
     d3.json(url).then(function (data) {
       // transform date string to DateF
