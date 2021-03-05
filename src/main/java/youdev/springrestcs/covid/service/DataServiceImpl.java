@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -29,12 +30,14 @@ public class DataServiceImpl {
 
 	@Autowired
 	private RestTemplate restTemplate;
+	
+	@Autowired
+	CacheManager cacheManager;
 
 	// data sorted by date desc
 	private static final String LAST_DATA_URL = "https://data.opendatasoft.com/api/records/1.0/search/?dataset=covid-19-pandemic-belgium-hosp-province@public&rows=1200&sort=date&facet=date&facet=province&facet=region";
 
 	@Cacheable("data")
-	@Scheduled(fixedRate = 3600 * 6)
 	public String getLastData() throws JsonParseException, IOException {
 		String jsonString = callApi();
 		ObjectMapper mapper = new ObjectMapper();
@@ -89,6 +92,14 @@ public class DataServiceImpl {
 			}
 		}
 		return jsonString;
+	}
+	
+	// clear cache every 12 hours
+	@Scheduled(fixedRate = 12 * 3600 * 1000)
+	public void refreshAllcachesAtIntervals() {
+		cacheManager.getCacheNames().stream()
+	      .forEach(cacheName -> cacheManager.getCache(cacheName).clear());
+		log.info("Cache evicted");
 	}
 
 }
