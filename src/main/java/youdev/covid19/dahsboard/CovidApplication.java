@@ -1,4 +1,4 @@
-package youdev.springrestcs.covid;
+package youdev.covid19.dahsboard;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

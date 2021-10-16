@@ -1,4 +1,4 @@
-package youdev.springrestcs.covid.service;
+package youdev.covid19.dahsboard.service;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -75,7 +75,12 @@ public class DataServiceImpl {
 		return jsonString;
 	}
 
-	public String callApi() {
+	/**
+	 * Call the API specified in the constant
+	 * @return JSON response
+	 */
+	private String callApi() {
+		log.info("callApi Method - START");
 		String jsonString = "";
 		try {
 			HttpHeaders headers = new HttpHeaders();

@@ -5,6 +5,10 @@ target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
+/img/
+/package-lock.json
+/src/main/resources/static/built/
+
 
 ### STS ###
 .apt_generated
