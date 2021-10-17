@@ -5,6 +5,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.CacheManager;
@@ -20,9 +21,11 @@ import org.springframework.web.client.RestTemplate;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import lombok.extern.slf4j.Slf4j;
+import youdev.covid19.dahsboard.model.Record;
 
 @Slf4j
 @Service
@@ -42,20 +45,14 @@ public class DataServiceImpl {
 		String jsonString = callApi();
 		ObjectMapper mapper = new ObjectMapper();
 		JsonNode root = mapper.readTree(jsonString);
-		ArrayList<ObjectNode> brusselsDatas = new ArrayList<>();
-		ArrayList<ObjectNode> walloniaDatas = new ArrayList<>();
-		ArrayList<ObjectNode> flandersDatas = new ArrayList<>();
+		List<Record> brusselsDatas = new ArrayList<>();
+		List<Record> walloniaDatas = new ArrayList<>();
+		List<Record> flandersDatas = new ArrayList<>();
 		for (JsonNode node : root.get("records")) {
-			ObjectNode record = mapper.createObjectNode();
-			record.put("recordid", node.get("recordid").asText());
-			record.put("province", node.at("/fields/province").asText());
-			record.put("region", node.at("/fields/region").asText());
-			record.put("new_in", node.at("/fields/new_in").asInt());
-			record.put("new_out", node.at("/fields/new_out").asInt());
-			record.put("total_in", node.at("/fields/total_in").asInt());
-			record.put("total_in_resp", node.at("/fields/total_in_resp").asInt());
-			record.put("date", node.at("/fields/date").asText());
-			switch (node.at("/fields/region").asText()) {
+			Record record = new Record();
+			record = mapper.readValue(node.get("fields").toString(), Record.class);
+			record.setRecordId(node.get("recordid").asText());
+			switch (record.getRegion()) {
 			case "Brussels":
 				brusselsDatas.add(record);
 				break;
@@ -68,9 +65,9 @@ public class DataServiceImpl {
 			}
 		}
 		ObjectNode datas = mapper.createObjectNode();
-		datas.putArray("Brussels").addAll(brusselsDatas);
-		datas.putArray("Flanders").addAll(flandersDatas);
-		datas.putArray("Wallonia").addAll(walloniaDatas);
+		datas.putArray("Brussels").addAll((ArrayNode)mapper.valueToTree(brusselsDatas));
+		datas.putArray("Flanders").addAll((ArrayNode)mapper.valueToTree(flandersDatas));
+		datas.putArray("Wallonia").addAll((ArrayNode)mapper.valueToTree(walloniaDatas));
 		jsonString = datas.toPrettyString();
 		return jsonString;
 	}
