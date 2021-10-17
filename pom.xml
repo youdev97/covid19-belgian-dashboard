@@ -11,7 +11,7 @@
 	</parent>
 	<groupId>youdev.covid19.dashboard</groupId>
 	<artifactId>covid19-belgian-dashboard</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0-SNAPSHOT</version>
 	<name>covid19-belgian-dashboard</name>
 	<description>
 		DashBoard of Belgium's hospitals situation during COVID-19.
