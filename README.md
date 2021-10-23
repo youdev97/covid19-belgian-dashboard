@@ -6,7 +6,7 @@ DataViz with D3.js v5 LineCharts & MapChart that displays last updated data abou
 
 ## Back-end Spring Boot
 
-Consume the openData API restructure, filter and format the response, make the new data available on a HTTP Endpoint, put it in cache for better performance (to do).
+Consume the openData API restructure, filter and format the response, make the new data available on a HTTP Endpoint, put it in cache for better performance.
 
 ## Front-end React.js & D3.js
 
