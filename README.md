@@ -42,4 +42,9 @@ Used MapChart that represents Belgium and on mouse move or click on one region y
 
 In the project directory, you can run:
 
-### `./mvnw package`
+```console
+./mvnw package
+java -jar target/covid19-belgian-dashboard-1.0-SNAPSHOT.jar
+```
+
+<http://localhost:8080>
